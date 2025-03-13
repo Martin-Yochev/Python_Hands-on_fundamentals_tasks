@@ -1,4 +1,5 @@
-"""todo
+"""This module contains JSONDataset and CSVDataset classes
+which help developing pipelines from Source to Sink objects.
 """
 import time
 from abc import ABC, abstractmethod

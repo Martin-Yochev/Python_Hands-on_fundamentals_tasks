@@ -55,7 +55,8 @@ class CSVReader(Reader):
         return pd.read_csv(self.filepath)
 
     def __str__(self):
-        return self.data.to_string(max_rows=20, show_dimensions=True)
+        return self.data.to_string(max_rows=20, max_cols=5, line_width=80,
+                               max_colwidth = 25, show_dimensions=True)
 
     def __repr__(self):
         return self.data.to_string()
@@ -184,7 +185,7 @@ def main():
     print("\n")
 
     print("Results from the csv reader:"+"\n")
-    print(csv_reader('random_data.csv'))
+    print(csv_reader('employment-data.csv'))
     print("\n")
 
     print("Results from the json reader:"+"\n")

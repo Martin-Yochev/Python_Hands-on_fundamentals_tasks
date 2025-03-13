@@ -99,7 +99,7 @@ def main():
 
     # Create a CSV dataset which includes cleaning
     # and transforming the data from the source
-    test = CSVDataset('employement-data.csv', 'employement-data-cleaned.csv')
+    test = CSVDataset('employment-data.csv', 'employment-data-cleaned.csv')
 
     # Save the data into the target CSV file
     test.save_data()
