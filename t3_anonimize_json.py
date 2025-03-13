@@ -5,8 +5,9 @@ as json
 import json
 
 def main():
+    """The main function of the module"""
     # Step 1: Open and load the file 'data.json'
-    with open('data.json', 'r') as file:
+    with open('data.json', mode='r', encoding='utf-8') as file:
         data = json.load(file)
 
     def anonimize_name(x):
@@ -30,7 +31,7 @@ def main():
     anonimize_name(data)
 
     # Step 3: Save the data as another json file
-    with open('anonimized_data.json', 'w') as file:
+    with open('anonimized_data.json', mode='w', encoding='utf-8') as file:
         json.dump(data, file, indent=4)
 
 if __name__ == "__main__":

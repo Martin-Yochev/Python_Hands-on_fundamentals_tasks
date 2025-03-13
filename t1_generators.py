@@ -2,15 +2,15 @@
 
 Functions
 ---------
-random_word -> str
-    Returns a random word based on input length
-random_date -> str
+random_word(n) -> str
+    Returns a random word based on input length (default is 8)
+random_date() -> str
     Returns a random date between 1900 and 2025 as string
-random_bool -> str
+random_bool() -> str
     Returns a random boolean as string
-generate_random_data -> Generator[str, None, None]
+generate_random_data(num_rows, word_length=8) -> Generator[str, None, None]
     Takes a positive integer and yields that many rows of random data
-write_into_csv -> None
+write_into_csv(filename, num_rows, word_length=8) -> None
     Writes random data in a file
 """
 
@@ -101,12 +101,14 @@ def write_into_csv(filename, num_rows: int, word_length=8) -> None:
     word_length : int, optional
         The length of the random words (default is 8)
     """
-    with open(filename, 'w') as file:
+    with open(filename, mode='w', encoding='utf-8') as file:
         for line in generate_random_data(num_rows, word_length):
             file.write(line + '\n')
 
 def main():
-    # write_into_csv('random_data.csv', 20, 50)
+    """Test"""
+    # Create a file 'random_data.csv' and write 20 rows with random data
+    write_into_csv('random_data.csv', 20)
     return
 
 if __name__ == '__main__':

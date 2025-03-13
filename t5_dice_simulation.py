@@ -6,19 +6,23 @@ import random
 import matplotlib.pyplot as plt
 
 class Dice:
-    """A class used to represent a Dice
-    ...
+    """A class used to represent a Dice.
 
     Attributes
     ----------
     sides : int, optional
-        the number of sides the dice has (default 6)
+        The number of sides the dice has (default 6)
     
 
     Methods
     -------
     roll() -> int
-        returns a random integer from one of the sides
+        Returns a random integer from one of the sides
+
+    Raises
+    ------
+    ValueError
+        If the input is not integer greater than 1
     """
 
     def __init__(self, sides=6):
@@ -31,21 +35,20 @@ class Dice:
         return random.randint(1, self.sides)
 
 class Simulation:
-    """A class to represent a simulation of rolling a dice
-    ...
+    """A class to represent a simulation of rolling a dice.
 
     Attributes
     ----------
     num_dices : int
-        the number of dices to be rolled in the simulation
+        The number of dices to be rolled in the simulation
     num_rolls : int
-        the number of rolls to be simulated
+        The number of rolls to be simulated
     dice_sides : int, optional
-        number of sides of the dices
+        Number of sides of the dices
     dices : list[Dice]
-        a list with Dice objects for the simulation
+        A list with Dice objects for the simulation
     results : dict[int,int]
-        a result dict where keys are the possible summed result
+        A result dict where keys are the possible summed result
         and the values are the occurances of the results in the
         simulation (initially values are 0)
 
@@ -57,6 +60,11 @@ class Simulation:
     __str__() -> str
         creates and shows a bar chart displaying the results and
         prints the results of the simulation
+
+    Raises
+    ------
+    ValueError
+        If the inputs are not integer greater than 0
     """
     def __init__(self, num_dices: int, num_rolls: int, dice_sides=6):
         if not isinstance(num_dices, int) or num_dices <= 0:
