@@ -43,8 +43,6 @@ class CSVDataset(Dataset):
         A source file to be read
     target_filepath : str
         A target CSV file for the data to be saved in
-    data: pd.DataFrame
-        Fetched data from the source file into a pandas DataFrame
     
     Methods
     -------

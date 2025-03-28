@@ -13,31 +13,31 @@ to make elements uppercase and finaly 'fil' to filter out
 the short words.
 """
 
+def split_string(func):
+    """A decorator that splits the result string of the
+    function being called into a list.
+    """
+    def wrapper():
+        return func().split()
+    return wrapper
+
+def up(func):
+    """A decorator that takes every element from a result
+    list and makes it uppercase.
+    """
+    def wrapper():
+        return [i.upper() for i in func()]
+    return wrapper
+def fil(func):
+    """A decorator that filters all elements from a
+    result list with length less than 4 out.
+    """
+    def wrapper():
+        return [i for i in func() if len(i) > 3]
+    return wrapper
+
 def main():
     """The main function of the module"""
-    def split_string(func):
-        """A decorator that splits the result string of the
-        function being called into a list.
-        """
-        def wrapper():
-            return func().split()
-        return wrapper
-
-    def up(func):
-        """A decorator that takes every element from a result
-        list and makes it uppercase.
-        """
-        def wrapper():
-            return [i.upper() for i in func()]
-        return wrapper
-
-    def fil(func):
-        """A decorator that filters all elements from a
-        result list with length less than 4 out.
-        """
-        def wrapper():
-            return [i for i in func() if len(i) > 3]
-        return wrapper
 
     @fil
     @up

@@ -28,9 +28,10 @@ class Distance:
     def _distribute(self):
         # a method called after initialization which distributes the metrics in
         # the correct way
-        self.meters = self.meters + (self.centimeters + self.milimeters // 100) // 100
+        self.meters = self.meters + (self.centimeters + self.milimeters // 10) // 100
         self.centimeters = (self.centimeters + self.milimeters // 10) % 100
         self.milimeters = self.milimeters % 10
+        self.total_milimeters = self.meters * 1000 + self.centimeters * 10 + self.milimeters
 
     @property
     def meters(self):
@@ -40,7 +41,7 @@ class Distance:
     @meters.setter
     def meters(self, value):
         if not isinstance(value, int) or value < 0:
-            raise ValueError("value must be non-negative integer")
+            raise ValueError("meters, centimeters and milimeters must be non-negative integers")
         self._meters = value
 
     @property
@@ -51,7 +52,7 @@ class Distance:
     @centimeters.setter
     def centimeters(self, value):
         if not isinstance(value, int) or value < 0:
-            raise ValueError("value must be non-negative integer")
+            raise ValueError("meters, centimeters and milimeters must be non-negative integers")
         self._centimeters = value
 
     @property
@@ -62,7 +63,7 @@ class Distance:
     @milimeters.setter
     def milimeters(self, value):
         if not isinstance(value, int) or value < 0:
-            raise ValueError("value must be non-negative integer")
+            raise ValueError("meters, centimeters and milimeters must be non-negative integers")
         self._milimeters = value
 
     def __str__(self):
@@ -73,31 +74,31 @@ class Distance:
 
     def __add__(self, other: 'Distance'):
         result: Distance = Distance(0,0,0)
-        result.meters = self.meters + other.meters
-        result.centimeters = self.centimeters + other.centimeters
-        result.milimeters = self.milimeters + other.milimeters
+        result.milimeters = self.total_milimeters + other.total_milimeters
         result._distribute()
         return result
 
-    def __iadd__(self, other):
-        self.meters = self.meters + other.meters
-        self.centimeters = self.centimeters + other.centimeters
-        self.milimeters = self.milimeters + other.milimeters
+    def __iadd__(self, other: 'Distance'):
+        self.milimeters += other.total_milimeters
         self._distribute()
         return self
 
-    def __sub__(self, other):
+    def __sub__(self, other: 'Distance'):
         result: Distance = Distance(0,0,0)
-        result.meters = self.meters - other.meters
-        result.centimeters = self.centimeters - other.centimeters
-        result.milimeters = self.milimeters - other.milimeters
+        try:
+            result.milimeters = self.total_milimeters - other.total_milimeters
+        except ValueError as exc:
+            raise ValueError("Resulting distance cannot be negative") from exc
         result._distribute()
         return result
 
-    def __isub__(self, other):
-        self.meters = self.meters - other.meters
-        self.centimeters = self.centimeters - other.centimeters
-        self.milimeters = self.milimeters - other.milimeters
+    def __isub__(self, other: 'Distance'):
+        try:
+            self.meters = 0
+            self.centimeters = 0
+            self.milimeters = self.total_milimeters - other.total_milimeters
+        except ValueError as exc:
+            raise ValueError("Resulting distance cannot be negative") from exc
         self._distribute()
         return self
 

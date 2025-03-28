@@ -4,28 +4,26 @@ as json
 """
 import json
 
+def anonimize_name(x):
+    """Anonimize an input list or dict where 'names' are converted to None.
+
+    Args:
+        x (dict | list): The input dictionary or list to be anonimized.
+    """
+    if isinstance(x, dict):
+        if 'name' in x:
+            x['name'] = None
+        for key in x:
+            anonimize_name(x[key])
+    elif isinstance(x, list):
+        for item in x:
+            anonimize_name(item)
+
 def main():
     """The main function of the module"""
     # Step 1: Open and load the file 'data.json'
     with open('data.json', mode='r', encoding='utf-8') as file:
         data = json.load(file)
-
-    def anonimize_name(x):
-        """Anonimize an input where 'names' are converted to None
-
-        The function takes the json file read above and replaces
-        the value of each occurance of 'name' key with None. It
-        checks also the depth of the file and replaces the 'names'
-        on all levels.
-        """
-        if isinstance(x, dict):
-            if 'name' in x:
-                x['name'] = None
-            for key in x:
-                anonimize_name(x[key])
-        elif isinstance(x, list):
-            for item in x:
-                anonimize_name(item)
 
     # Step 2: Anonimize the data
     anonimize_name(data)

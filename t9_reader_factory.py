@@ -17,8 +17,6 @@ class Reader(ABC):
     ----------
     filepath : str
         A file to be read
-    data : pd.DataFrame
-        The data in pandas DataFrame format
 
     Methods
     -------
