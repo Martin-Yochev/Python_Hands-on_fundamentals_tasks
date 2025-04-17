@@ -139,13 +139,16 @@ class ReaderFactory:
     def get_reader(reader_type: str):
         """Returns a reader based on the input.
         """
-        if reader_type == 'csv':
-            return CSVReader
-        if reader_type == 'json':
-            return JSONReader
-        if reader_type == 'database':
-            return DatabaseReader
-        raise ValueError("Reader type not supported")
+        type : str = reader_type.lower()
+        readers : dict[str, Any] = {
+            'csv': CSVReader,
+            'json': JSONReader,
+            'database': DatabaseReader
+        }
+        try:
+            return readers[type]
+        except KeyError:
+            raise ValueError("Reader type not supported")
 
 def main():
     """Test the readers."""
@@ -155,21 +158,21 @@ def main():
 
     # Insert the example data into the table
 
-    # cur = conn.cursor()
-    # cur.execute("""CREATE TABLE IF NOT EXISTS users(
-    #    userid INT PRIMARY KEY,
-    #    fname TEXT,
-    #    company TEXT,
-    #    gender TEXT,
-    #    date DATE,
-    #    amount FLOAT);
-    # """)
-    # users = [
-    #     ('00001', 'Nik', 'datagy', 'male', '2023-06-01', 12.34),
-    #     ('00002', 'Lois', 'Daily Planet', 'Female', '2023-07-01', 12.56),
-    #     ('00003', 'Peter', 'Parker Tech', 'Male', '2023-08-01', 45.67),
-    #     ('00004', 'Bruce', 'Wayne Enterprises', 'male', '2023-09-01', 123.12)
-    #     ]
+    cur = conn.cursor()
+    cur.execute("""CREATE TABLE IF NOT EXISTS users(
+       userid INT PRIMARY KEY,
+       fname TEXT,
+       company TEXT,
+       gender TEXT,
+       date DATE,
+       amount FLOAT);
+    """)
+    users = [
+        ('00001', 'Nik', 'datagy', 'male', '2023-06-01', 12.34),
+        ('00002', 'Lois', 'Daily Planet', 'Female', '2023-07-01', 12.56),
+        ('00003', 'Peter', 'Parker Tech', 'Male', '2023-08-01', 45.67),
+        ('00004', 'Bruce', 'Wayne Enterprises', 'male', '2023-09-01', 123.12)
+        ]
     # cur.executemany("INSERT INTO users VALUES(?, ?, ?, ?, ?, ?);", users)
     # conn.commit()
 
